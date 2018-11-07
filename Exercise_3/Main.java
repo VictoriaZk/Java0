@@ -1,4 +1,5 @@
 
+import exception.SortArrayException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.InputMismatchException;
@@ -10,12 +11,12 @@ public class Main {
     private final static Logger LOGGER = LogManager.getLogger(Main.class);
     private final static Scanner IN = new Scanner ( System.in );
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SortArrayException {
         Vector v = new Vector();
         menu(v);
     }
 
-    private static void menu( Vector v ) {
+    private static void menu( Vector v ) throws SortArrayException {
         while (true) {
             int choice = 0, key;
             System.out.println(" Choose the operation: \n");
@@ -88,8 +89,13 @@ public class Main {
                     break;
                 case 13:
                     v.quickSort(0, v.getSize() - 1);
-                    System.out.println( " After the sorting: ");
-                    v.print();
+                    if (!v.isSortAscending()){
+                        throw new SortArrayException(" Vector does not sort!");
+                    }
+                    else {
+                        System.out.println(" After the sorting: ");
+                        v.print();
+                    }
                     break;
                 case 14:
                     v.insertSort();
